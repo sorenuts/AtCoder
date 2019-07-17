@@ -25,30 +25,26 @@ int main(){
             v[j].PB(num);
         }
     }
-    REP(i,3){
-        sort(ALL(v[i]), greater<ll>());
-    }
     ll ans=0,total;
-    REP(i,(1<<3)){
-        total=0;
-        REP(j,3){
-            REP(k,m){
-                if(i &(1<<j)){
-                    total += v[j][k];
+    REP(bit,(1<<3)){
+        vector<ll> x;
+        total = 0;
+        REP(i,n){
+            ll tmp=0;
+            REP(j,3){
+                if(bit &(1<<j)){
+                    tmp += v[j][i];
                 }else{
-                    total -= v[j][v[j].size()-k];
+                    tmp -= v[j][i];
                 }
             }
+            x.PB(tmp);
         }
-        cout << total << endl;
+        sort(ALL(x), greater<ll>());
+        REP(j,m){
+            total+=x[j];
+        }
+        ans = max(ans, total);
     }
-
-
+    cout << ans << endl;
 }
-/*
- 絶対値をとる
- 正での絶対値と負での絶対値の組み合わせ2*2*2=8通り
- sortにかけてから上位か下位からm個取得
- totalに値を保管してやり、ans=0と比較してansに保管
-
- */
